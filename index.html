@@ -302,9 +302,63 @@
     transform: translateY(-4px);
   }
 
+  /* ── MUSIC PLAYER ── */
+  #music-player {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 160px;
+  }
+  #music-prev, #music-btn, #music-next {
+    background: none; border: none; cursor: pointer;
+    font-size: .95rem; padding: 2px 4px;
+    flex-shrink: 0; transition: color .2s; line-height: 1;
+  }
+  #music-prev, #music-next { color: var(--mauve); }
+  #music-btn { color: var(--deep-pink); font-size: 1.05rem; }
+  #music-prev:hover, #music-next:hover, #music-btn:hover { color: var(--dark-mauve); }
+  #music-info { flex: 1; min-width: 0; }
+  #music-top {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+  }
+  #music-title {
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--dark-mauve);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #music-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  #music-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--light-pink);
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  #music-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--pink), var(--deep-pink));
+    border-radius: 10px;
+    pointer-events: none;
+    transition: width .1s linear;
+  }
+
   /* ── MOBILE ── */
   @media (max-width: 768px) {
     body { overflow-x: hidden; }
+    #music-player { display: none; }
 
     /* Nav */
     nav { padding: 10px 16px; }
@@ -325,7 +379,7 @@
 
     /* Hide all floating side rila characters on mobile */
     #rilamagnify, #rilasmart,
-    img[src="rock_me.png"], img[src="rilastand.png"] { display: none !important; }
+    img[src="rock_me.png"], img[src="rilastand.png"], img[src="frame.png"] { display: none !important; }
 
     /* About */
     #about > div > div:not(.paw-bg) { padding: 24px 20px; }
@@ -353,6 +407,7 @@
 <body>
 
 <!-- NAV -->
+<audio id="bg-audio" preload="auto"></audio>
 <nav>
   <div class="nav-logo">✿ <span>emily's corner</span></div>
   <ul>
@@ -361,6 +416,19 @@
     <li><a href="#projects">projects</a></li>
     <li><a href="#contact">contact</a></li>
   </ul>
+  <div id="music-player">
+    <div id="music-info">
+      <div id="music-top">
+        <button id="music-btn" aria-label="Play / Pause">▶</button>
+        <div id="music-title">♫ babydoll · dominic fike</div>
+      </div>
+      <div id="music-bar-row">
+        <button id="music-prev" aria-label="Previous">⏮</button>
+        <div id="music-bar"><div id="music-fill"></div></div>
+        <button id="music-next" aria-label="Next">⏭</button>
+      </div>
+    </div>
+  </div>
 </nav>
 <div class="lace-divider"></div>
 
@@ -408,8 +476,9 @@
 <section id="experience">
   <h2 class="section-title">🎀 experience</h2>
   <div class="exp-list" style="position:relative;">
-    <img src="rilasmart.png" id="rilasmart" alt="rila character" class="rila-rock" style="position:absolute;left:calc(100% + 18px);top:calc(50% - 130px);transform:rotate(0deg);width:280px;height:280px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(196,122,138,.2));z-index:2;"/>
+    <img src="canvas2.png" id="rilasmart" alt="rila character" class="rila-rock" style="position:absolute;left:calc(100% + 18px);top:calc(50% - 130px);transform:rotate(0deg);width:280px;height:280px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(196,122,138,.2));z-index:2;"/>
     <img src="rock_me.png" alt="rock me" style="position:absolute;left:100%;top:calc(50% + 80px);margin-left:90px;width:120px;height:auto;object-fit:contain;pointer-events:none;"/>
+    <img src="canvas.png" alt="frame" class="rila-rock" style="position:absolute;right:calc(100% + 50px);top:-30px;transform:rotate(0deg);width:190px;height:auto;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(196,122,138,.2));z-index:2;"/>
 
     <div class="exp-card">
       <div class="exp-header">
@@ -585,6 +654,76 @@
       if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'center'}); }
     });
   });
+
+  // Music player — playlist
+  (function() {
+    const songs = [
+      { src: 'babydoll.mp3',     title: '♫ babydoll · dominic fike',     startTime: 8 },
+      { src: 'healthyhabit.mp3', title: '♫ healthy habit · madison beer', startTime: 0 },
+      { src: 'stateside.mp3',    title: '♫ stateside · pinkpantheress',   startTime: 0 },
+    ];
+    let current = 0, playing = false;
+
+    const audio   = document.getElementById('bg-audio');
+    const btn     = document.getElementById('music-btn');
+    const prevBtn = document.getElementById('music-prev');
+    const nextBtn = document.getElementById('music-next');
+    const fill    = document.getElementById('music-fill');
+    const bar     = document.getElementById('music-bar');
+    const titleEl = document.getElementById('music-title');
+
+    function setIcon(v) { playing = v; btn.textContent = v ? '⏸' : '▶'; }
+
+    function loadTrack(idx, autoplay) {
+      current = ((idx % songs.length) + songs.length) % songs.length;
+      const song = songs[current];
+      titleEl.textContent = song.title;
+      fill.style.width = '0%';
+      audio.src = song.src;
+      if (autoplay) audio.play().catch(() => {});
+    }
+
+    audio.addEventListener('loadedmetadata', () => {
+      const st = songs[current].startTime;
+      if (st) audio.currentTime = st;
+    });
+    audio.addEventListener('play',  () => setIcon(true));
+    audio.addEventListener('pause', () => setIcon(false));
+    audio.addEventListener('ended', () => loadTrack(current + 1, true));
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    });
+    bar.addEventListener('click', (e) => {
+      if (!audio.duration) return;
+      audio.currentTime = ((e.clientX - bar.getBoundingClientRect().left) / bar.offsetWidth) * audio.duration;
+    });
+
+    // Load first track
+    loadTrack(0, false);
+
+    // Muted autoplay — unmute on first interaction
+    audio.muted = true;
+    audio.play().then(() => {
+      setIcon(true);
+      const unmute = () => { audio.muted = false; };
+      ['click', 'scroll', 'keydown', 'touchstart'].forEach(ev =>
+        window.addEventListener(ev, unmute, { once: true, passive: true })
+      );
+    }).catch(() => {
+      window.addEventListener('click', () => {
+        audio.muted = false;
+        audio.play().then(() => setIcon(true)).catch(() => {});
+      }, { once: true });
+    });
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); audio.muted = false;
+      if (playing) { audio.pause(); } else { audio.play(); }
+    });
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); loadTrack(current - 1, true); });
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); loadTrack(current + 1, true); });
+  })();
 
   // Hero png rain — uniform spread; center fades before text; already mid-flow on mount
   (function() {

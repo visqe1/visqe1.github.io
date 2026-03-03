@@ -301,6 +301,53 @@
   .contact-box:hover {
     transform: translateY(-4px);
   }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    body { overflow-x: hidden; }
+
+    /* Nav */
+    nav { padding: 10px 16px; }
+    .nav-logo { font-size: 1.2rem; }
+    nav ul { gap: 10px; }
+    nav ul li a { font-size: .75rem; padding: 3px 7px; }
+
+    /* Hero */
+    .hero { padding: 36px 20px 20px; }
+    h1 { font-size: 2rem; }
+    .hero-sub { font-size: .88rem; }
+    .hero-badges { gap: 6px; }
+    .badge { font-size: .75rem; padding: 4px 10px; }
+
+    /* Sections */
+    section { padding: 40px 20px; }
+    .section-title { font-size: 1.7rem; }
+
+    /* Hide all floating side rila characters on mobile */
+    #rilamagnify, #rilasmart,
+    img[src="rock_me.png"], img[src="rilastand.png"] { display: none !important; }
+
+    /* About */
+    #about > div > div:not(.paw-bg) { padding: 24px 20px; }
+
+    /* Experience */
+    .exp-list { max-width: 100%; }
+    .exp-card { padding: 20px 16px; }
+    .exp-header { flex-direction: column; gap: 6px; }
+
+    /* Projects */
+    .projects-grid { grid-template-columns: 1fr; }
+
+    /* Contact */
+    .contact-links { flex-wrap: wrap !important; justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    nav ul { gap: 6px; }
+    nav ul li a { font-size: .68rem; padding: 2px 5px; }
+    h1 { font-size: 1.7rem; }
+    .avatar { width: 100px; height: 100px; }
+  }
 </style>
 </head>
 <body>

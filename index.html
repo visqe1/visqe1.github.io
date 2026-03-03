@@ -246,6 +246,24 @@
     position: relative; z-index: 5;
     margin: -30px 0;
   }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .anim {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.65s cubic-bezier(.22,.68,0,1.2), transform 0.65s cubic-bezier(.22,.68,0,1.2);
+  }
+  .anim.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .anim-fade {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .anim-fade.visible {
+    opacity: 1;
+  }
 </style>
 </head>
 <body>
@@ -407,6 +425,47 @@
 <div class="lace-divider"></div>
 
 <script>
+  // Scroll animations (both directions)
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+
+  // Section titles
+  document.querySelectorAll('.section-title').forEach(el => {
+    el.classList.add('anim'); scrollObserver.observe(el);
+  });
+
+  // About content box
+  const aboutBox = document.querySelector('#about > div:not(.paw-bg)');
+  if (aboutBox) { aboutBox.classList.add('anim'); scrollObserver.observe(aboutBox); }
+
+  // Experience cards (staggered)
+  document.querySelectorAll('.exp-card').forEach((el, i) => {
+    el.classList.add('anim');
+    el.style.transitionDelay = (i * 0.1) + 's';
+    scrollObserver.observe(el);
+  });
+
+  // Project cards (staggered)
+  document.querySelectorAll('.proj-card').forEach((el, i) => {
+    el.classList.add('anim');
+    el.style.transitionDelay = (i * 0.1) + 's';
+    scrollObserver.observe(el);
+  });
+
+  // Contact box
+  const contactBox = document.querySelector('.contact-box');
+  if (contactBox) { contactBox.classList.add('anim'); scrollObserver.observe(contactBox); }
+
+  // Rila characters (fade in)
+  document.querySelectorAll('img[src*="rila"]').forEach(el => {
+    el.classList.add('anim-fade');
+    el.style.transitionDelay = '0.25s';
+    scrollObserver.observe(el);
+  });
+
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {

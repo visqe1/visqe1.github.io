@@ -229,6 +229,15 @@
     border:1px solid var(--pink); border-radius:12px;
     padding:2px 10px; font-size:.72rem; font-weight:600;
   }
+  .skills-group { margin-bottom:14px; }
+  .skills-group:last-child { margin-bottom:0; }
+  .skills-label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--deep-pink); margin-bottom:7px; }
+  #proj-switcher { display:flex; flex-direction:column; }
+  #stack-panel { display:none; flex:1; justify-content:center; flex-direction:column; }
+  #stack-card { background:var(--white); border-radius:20px; padding:28px 24px; border:2px solid var(--pink); box-shadow:0 4px 16px rgba(196,122,138,.1); max-width:900px; margin:0 auto; }
+  #projects { padding-top:36px; padding-bottom:36px; }
+  #proj-toggle { background:none; border:none; cursor:pointer; font-size:.8rem; font-weight:700; color:var(--deep-pink); display:block; margin:12px auto 0; padding:4px 0; letter-spacing:.02em; transition:color .2s; }
+  #proj-toggle:hover { color:var(--dark-mauve); }
   .proj-links { display:flex; gap:10px; }
   .proj-link {
     text-decoration:none; font-size:.8rem; font-weight:700;
@@ -522,43 +531,94 @@
 <section id="projects">
   <div class="paw-bg"></div>
   <h2 class="section-title"><img src="bow.png" alt="bow" style="width:2.6rem;height:auto;vertical-align:middle;margin-right:6px;"> projects</h2>
-  <div class="projects-grid">
 
-    <div class="proj-card" style="position:relative;overflow:visible;">
-      <img src="crown.png" alt="crown" style="position:absolute;top:-22px;right:-22px;width:68px;height:auto;transform:rotate(20deg);filter:drop-shadow(0 2px 6px rgba(196,122,138,.3));pointer-events:none;z-index:2;"/>
-      <h3>Matcha Finder</h3>
-      <p>A full-stack web app for discovering local matcha cafes by distance, rating, and popularity — with Google Maps integration, favorites, and shareable cafe lists.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">Next.js</span>
-        <span class="proj-tag">Node</span>
-        <span class="proj-tag">PostgreSQL</span>
-        <span class="proj-tag">Google Maps API</span>
+  <div id="proj-switcher">
+  <div id="proj-panel">
+    <div class="projects-grid">
+      <div class="proj-card" style="position:relative;overflow:visible;">
+        <img src="crown.png" alt="crown" style="position:absolute;top:-22px;right:-22px;width:68px;height:auto;transform:rotate(20deg);filter:drop-shadow(0 2px 6px rgba(196,122,138,.3));pointer-events:none;z-index:2;"/>
+        <h3>Matcha Finder</h3>
+        <p>A full-stack web app for discovering local matcha cafes by distance, rating, and popularity — with Google Maps integration, favorites, and shareable cafe lists.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Next.js</span>
+          <span class="proj-tag">Node</span>
+          <span class="proj-tag">PostgreSQL</span>
+          <span class="proj-tag">Google Maps API</span>
+        </div>
+        <div class="proj-links">
+          <a class="proj-link" href="https://github.com/visqe1/matcha-finder">GitHub</a>
+        </div>
       </div>
-      <div class="proj-links">
-        <a class="proj-link" href="https://github.com/visqe1/matcha-finder">GitHub</a>
+
+      <div class="proj-card">
+        <h3>Semantic Notes Search</h3>
+        <p>A document search engine that indexes PDFs and Markdown files, ranking results using TF-IDF and cosine similarity for fast, relevant queries.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span>
+          <span class="proj-tag">FastAPI</span>
+          <span class="proj-tag">PostgreSQL</span>
+          <span class="proj-tag">scikit-learn</span>
+        </div>
+        <div class="proj-links">
+          <a class="proj-link" href="https://github.com/visqe1/semantic-notes-search">GitHub</a>
+        </div>
+      </div>
+
+      <div class="proj-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:220px;background:linear-gradient(135deg,var(--light-pink),var(--cream));border-style:dashed;">
+        <h3 style="color:var(--deep-pink);margin-bottom:8px;">coming soon</h3>
+        <p style="font-style:italic;color:var(--mauve);font-size:.82rem;">something cute is in the works...</p>
       </div>
     </div>
-
-    <div class="proj-card">
-      <h3>Semantic Notes Search</h3>
-      <p>A document search engine that indexes PDFs and Markdown files, ranking results using TF-IDF and cosine similarity for fast, relevant queries.</p>
-      <div class="proj-tags">
-        <span class="proj-tag">React</span>
-        <span class="proj-tag">FastAPI</span>
-        <span class="proj-tag">PostgreSQL</span>
-        <span class="proj-tag">scikit-learn</span>
-      </div>
-      <div class="proj-links">
-        <a class="proj-link" href="https://github.com/visqe1/semantic-notes-search">GitHub</a>
-      </div>
-    </div>
-
-    <div class="proj-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:220px;background:linear-gradient(135deg,var(--light-pink),var(--cream));border-style:dashed;">
-      <h3 style="color:var(--deep-pink);margin-bottom:8px;">coming soon</h3>
-      <p style="font-style:italic;color:var(--mauve);font-size:.82rem;">something cute is in the works...</p>
-    </div>
-
   </div>
+
+  <div id="stack-panel">
+    <div id="stack-card">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
+        <div class="skills-group">
+          <div class="skills-label">languages</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">Java</span>
+            <span class="proj-tag">JavaScript</span>
+            <span class="proj-tag">TypeScript</span>
+            <span class="proj-tag">SQL</span>
+            <span class="proj-tag">HTML/CSS</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-label">frameworks &amp; libraries</div>
+          <div class="proj-tags">
+            <span class="proj-tag">React</span>
+            <span class="proj-tag">Next.js</span>
+            <span class="proj-tag">Node</span>
+            <span class="proj-tag">Express</span>
+            <span class="proj-tag">Flask</span>
+            <span class="proj-tag">FastAPI</span>
+            <span class="proj-tag">Prisma</span>
+            <span class="proj-tag">Pandas</span>
+            <span class="proj-tag">NumPy</span>
+            <span class="proj-tag">scikit-learn</span>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-label">tools</div>
+          <div class="proj-tags">
+            <span class="proj-tag">PostgreSQL</span>
+            <span class="proj-tag">Git</span>
+            <span class="proj-tag">Docker</span>
+            <span class="proj-tag">AWS (S3, Lambda)</span>
+            <span class="proj-tag">Snowflake</span>
+            <span class="proj-tag">Jupyter</span>
+            <span class="proj-tag">Jira</span>
+            <span class="proj-tag">Excel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <button id="proj-toggle">✦ click to view tech stack</button>
 </section>
 
 <div class="lace-divider"></div>
@@ -751,6 +811,65 @@
       drop.style.setProperty('--fall-dist', fallDist + 'px');
       container.appendChild(drop);
     }
+  })();
+</script>
+<script>
+  (function() {
+    const btn = document.getElementById('proj-toggle');
+    const switcher = document.getElementById('proj-switcher');
+    const projPanel = document.getElementById('proj-panel');
+    const stackPanel = document.getElementById('stack-panel');
+    let showing = 'projects', animating = false;
+
+    function lockHeight() {
+      switcher.style.minHeight = projPanel.offsetHeight + 'px';
+    }
+    window.addEventListener('load', lockHeight);
+    window.addEventListener('resize', lockHeight);
+    const OUT_DUR = 300, IN_DUR = 350;
+
+    function fadeSlideOut(el, cb) {
+      el.style.transition = `opacity ${OUT_DUR}ms ease, transform ${OUT_DUR}ms ease`;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-24px)';
+      setTimeout(() => {
+        el.style.display = 'none';
+        el.style.transition = 'none';
+        el.style.opacity = '';
+        el.style.transform = '';
+        cb();
+      }, OUT_DUR);
+    }
+
+    function fadeSlideIn(el, cb) {
+      el.style.display = el.id === 'stack-panel' ? 'flex' : 'block';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.offsetHeight; // force reflow
+      el.style.transition = `opacity ${IN_DUR}ms ease, transform ${IN_DUR}ms ease`;
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+      setTimeout(() => { el.style.transition = 'none'; cb(); }, IN_DUR);
+    }
+
+    btn.addEventListener('click', () => {
+      if (animating) return;
+      animating = true;
+
+      if (showing === 'projects') {
+        fadeSlideOut(projPanel, () => {
+          fadeSlideIn(stackPanel, () => { animating = false; });
+        });
+        btn.textContent = '✦ click to view projects';
+        showing = 'stack';
+      } else {
+        fadeSlideOut(stackPanel, () => {
+          fadeSlideIn(projPanel, () => { animating = false; });
+        });
+        btn.textContent = '✦ click to view tech stack';
+        showing = 'projects';
+      }
+    });
   })();
 </script>
 </body>

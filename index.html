@@ -219,6 +219,7 @@
     box-shadow:0 4px 16px rgba(196,122,138,.1);
     position:relative; overflow:hidden;
     transition: box-shadow .25s ease, border-color .25s ease;
+    display:flex; flex-direction:column;
   }
   .proj-card:hover {
     animation: cardShake 0.45s ease forwards;
@@ -227,7 +228,7 @@
   }
   .proj-icon { font-size:2rem; margin-bottom:12px; }
   .proj-card h3 { font-size:1rem; font-weight:700; color:var(--dark-mauve); margin-bottom:8px; }
-  .proj-card p { font-size:.85rem; color:var(--mauve); line-height:1.6; margin-bottom:14px; }
+  .proj-card p { font-size:.85rem; color:var(--mauve); line-height:1.6; margin-bottom:14px; flex:1; }
   .proj-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
   .proj-tag {
     background:var(--light-pink); color:var(--dark-mauve);
@@ -552,7 +553,7 @@
       <div class="proj-card" style="position:relative;overflow:visible;">
         <img src="crown.png" alt="crown" style="position:absolute;top:-22px;right:-22px;width:68px;height:auto;transform:rotate(20deg);filter:drop-shadow(0 2px 6px rgba(196,122,138,.3));pointer-events:none;z-index:2;"/>
         <h3>Matcha Finder</h3>
-        <p>A full-stack web app for discovering local matcha cafes by distance, rating, and popularity — with Google Maps integration, favorites, and shareable cafe lists.</p>
+        <p>Discover local matcha cafes filtered by distance, rating, and popularity, with Google Maps integration, favorites, and shareable lists.</p>
         <div class="proj-tags">
           <span class="proj-tag">Next.js</span>
           <span class="proj-tag">Node</span>
@@ -566,7 +567,7 @@
 
       <div class="proj-card">
         <h3>Semantic Notes Search</h3>
-        <p>A document search engine that indexes PDFs and Markdown files, ranking results using TF-IDF and cosine similarity for fast, relevant queries.</p>
+        <p>A search engine for personal notes and documents that ranks results by relevance, not just exact matches — so the most useful files always surface first.</p>
         <div class="proj-tags">
           <span class="proj-tag">React</span>
           <span class="proj-tag">FastAPI</span>

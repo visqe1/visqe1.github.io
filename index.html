@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>✿ My Sweet Space ✿</title>
+<title>✿ emily's corner ✿</title>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -13,7 +13,6 @@
     --cream: #fef6e8;
     --mauve: #c47a8a;
     --dark-mauve: #9d5f72;
-    --mint: #b8e4c9;
     --white: #fffaf8;
   }
 
@@ -26,23 +25,24 @@
     overflow-x: hidden;
   }
 
-  /* ── LACE BORDER ── */
-  .lace-top {
-    width:100%; height:36px;
-    background: var(--white);
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='36'%3E%3Cellipse cx='20' cy='0' rx='20' ry='18' fill='black'/%3E%3C/svg%3E") repeat-x bottom/40px 36px;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='36'%3E%3Cellipse cx='20' cy='0' rx='20' ry='18' fill='black'/%3E%3C/svg%3E") repeat-x bottom/40px 36px;
-  }
-  .lace-bottom {
-    width:100%; height:36px;
-    background: var(--white);
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='36'%3E%3Cellipse cx='20' cy='36' rx='20' ry='18' fill='black'/%3E%3C/svg%3E") repeat-x top/40px 36px;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='36'%3E%3Cellipse cx='20' cy='36' rx='20' ry='18' fill='black'/%3E%3C/svg%3E") repeat-x top/40px 36px;
-  }
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width:8px; }
+  ::-webkit-scrollbar-track { background:var(--light-pink); }
+  ::-webkit-scrollbar-thumb { background:var(--pink); border-radius:10px; }
 
   /* ── NAV ── */
   nav {
-    background: var(--white);
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(242,175,192,0.18) 0px,
+        rgba(242,175,192,0.18) 8px,
+        rgba(253,230,238,0.25) 8px,
+        rgba(253,230,238,0.25) 16px,
+        rgba(196,122,138,0.12) 16px,
+        rgba(196,122,138,0.12) 24px
+      ),
+      var(--white);
     padding: 14px 40px;
     display: flex; align-items:center; justify-content:space-between;
     border-bottom: 2px dashed var(--pink);
@@ -51,8 +51,7 @@
   }
   .nav-logo {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.7rem;
-    color: var(--deep-pink);
+    font-size: 1.7rem; color: var(--deep-pink);
   }
   .nav-logo span { color: var(--mauve); }
   nav ul { list-style:none; display:flex; gap:28px; }
@@ -62,177 +61,174 @@
     padding:4px 10px; border-radius:20px;
     transition: all .25s;
   }
-  nav ul li a:hover {
-    background: var(--light-pink);
-    color: var(--deep-pink);
-  }
+  nav ul li a:hover { background:var(--light-pink); color:var(--deep-pink); }
 
   /* ── HERO ── */
   .hero {
     background: var(--white);
-    padding: 70px 40px 20px;
+    padding: 70px 40px 30px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
-  .hero::before, .hero::after {
-    content:'';
-    position:absolute; top:0;
-    width:220px; height:220px;
-    border-radius:50%;
-    background: radial-gradient(circle, #fde6ee 60%, transparent 100%);
-    opacity:.7;
-  }
-  .hero::before { left:-80px; }
-  .hero::after  { right:-80px; }
 
-  .floating-deco {
-    position:absolute;
-    animation: floaty 4s ease-in-out infinite;
-    font-size:1.5rem;
-    opacity:.7;
+  .rain-container {
+    position:absolute; inset:0;
+    overflow:hidden; pointer-events:none; z-index:0;
   }
-  @keyframes floaty {
-    0%,100% { transform:translateY(0) rotate(-5deg); }
-    50%      { transform:translateY(-12px) rotate(5deg); }
+  .hero-content { position:relative; z-index:1; }
+  .raindrop {
+    position:absolute; top:-60px;
+    animation:rainFall linear infinite; opacity:0;
   }
-  .d1{top:20px;left:8%; animation-delay:.3s;}
-  .d2{top:40px;right:10%; animation-delay:.8s;}
-  .d3{bottom:60px;left:14%; animation-delay:1.2s;}
-  .d4{bottom:40px;right:7%; animation-delay:.1s;}
+  @keyframes rainFall {
+    0%   { transform:translateY(0); opacity:0; }
+    8%   { opacity:.65; }
+    92%  { opacity:.65; }
+    100% { transform:translateY(var(--fall-dist,700px)); opacity:0; }
+  }
+  @keyframes rainFallCenter {
+    0%   { transform:translateY(0); opacity:0; }
+    10%  { opacity:.4; }
+    48%  { opacity:0; }
+    100% { transform:translateY(var(--fall-dist,700px)); opacity:0; }
+  }
 
-  .avatar-wrap {
-    display:inline-block; position:relative; margin-bottom:20px;
-  }
+  .avatar-wrap { display:inline-block; position:relative; margin-bottom:20px; }
   .avatar {
     width:130px; height:130px; border-radius:50%;
     border:5px solid var(--pink);
-    background: linear-gradient(135deg, var(--cream), var(--light-pink));
-    display:flex; align-items:center; justify-content:center;
-    font-size:3.5rem;
+    object-fit:cover;
     box-shadow: 0 0 0 6px var(--white), 0 0 0 8px var(--pink);
+    display:block;
   }
-  /* bow on avatar */
-  .bow {
-    position:absolute; top:-18px; left:50%; transform:translateX(-50%);
-  }
-  .bow svg { width:60px; height:34px; }
+  .bow { position:absolute; top:-10px; right:-18px; transform:rotate(25deg); }
+  .bow img { width:70px; height:auto; }
 
   h1 {
     font-family:'Dancing Script', cursive;
-    font-size:3rem; color:var(--deep-pink);
-    margin-bottom:8px;
+    font-size:3rem; color:var(--deep-pink); margin-bottom:8px;
   }
-  .hero-sub {
-    font-size:1rem; color:var(--mauve);
-    margin-bottom:24px; font-weight:500;
-  }
+  .hero-sub { font-size:1rem; color:var(--mauve); margin-bottom:24px; font-weight:500; }
   .hero-badges { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
   .badge {
     background:var(--light-pink); color:var(--dark-mauve);
-    border:1.5px solid var(--pink);
-    border-radius:20px; padding:5px 14px;
-    font-size:.82rem; font-weight:600;
+    border:1.5px solid var(--pink); border-radius:20px;
+    padding:5px 14px; font-size:.82rem; font-weight:600;
   }
 
-  /* ── SECTIONS ── */
+  /* ── SECTION BASE ── */
   section { padding: 60px 40px; }
   .section-title {
     font-family:'Dancing Script', cursive;
     font-size:2.2rem; color:var(--deep-pink);
     text-align:center; margin-bottom:36px;
-    position:relative;
   }
   .section-title::after {
-    content:'';
-    display:block; margin:10px auto 0;
-    width:80px; height:3px;
-    border-radius:2px;
+    content:''; display:block; margin:10px auto 0;
+    width:80px; height:3px; border-radius:2px;
     background: linear-gradient(90deg, var(--pink), var(--deep-pink), var(--pink));
   }
 
   /* ── ABOUT ── */
-  #about { background:var(--cream); }
-  .about-card {
-    max-width:700px; margin:0 auto;
-    background:var(--white); border-radius:24px;
-    padding:36px 40px;
-    border:2px solid var(--pink);
-    box-shadow:0 6px 24px rgba(196,122,138,.12);
-    line-height:1.8; font-size:.98rem;
-    position:relative; overflow:hidden;
+  #about { position:relative; overflow:hidden; }
+  .paw-bg {
+    position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    pointer-events:none; z-index:0;
+    background: url("paw.png") repeat;
+    background-size: 150px 150px;
+    transform: rotate(25deg);
+    opacity: 0.11;
   }
-  .about-card::before {
-    content:'🍓';
-    position:absolute; bottom:-10px; right:-10px;
-    font-size:5rem; opacity:.1;
-  }
-  .about-card p { margin-bottom:12px; }
+  #about .section-title, #about > div:not(.paw-bg),
+  #projects .section-title, #projects > div:not(.paw-bg) { position:relative; z-index:1; }
 
-  /* ── INTERESTS ── */
-  #interests { background:var(--light-pink); }
-  .cards-grid {
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
-    gap:20px; max-width:860px; margin:0 auto;
+  /* ── EXPERIENCE ── */
+  #experience {
+    background:
+      radial-gradient(circle, rgba(255,255,255,0.45) 4px, transparent 4px),
+      radial-gradient(circle, rgba(255,255,255,0.45) 4px, transparent 4px),
+      var(--light-pink);
+    background-size: 28px 28px;
+    background-position: 0 0, 14px 14px;
   }
-  .int-card {
+  .exp-list { max-width:700px; margin:0 auto; display:flex; flex-direction:column; gap:20px; }
+  .exp-card {
     background:var(--white); border-radius:20px;
-    padding:28px 16px; text-align:center;
+    padding:28px 32px;
+    border:2px solid var(--pink);
+    box-shadow:0 4px 16px rgba(196,122,138,.1);
+    position:relative; overflow:hidden;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .exp-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(196,122,138,.22);
+    border-color: var(--deep-pink);
+  }
+  .exp-card::after {
+    content:''; position:absolute;
+    left:0; top:0; bottom:0; width:5px;
+    background: linear-gradient(180deg, var(--pink), var(--deep-pink));
+    border-radius:4px 0 0 4px;
+    transition: width .3s ease;
+  }
+  .exp-card:hover::after {
+    width: 8px;
+  }
+  .exp-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+  .exp-role { font-weight:700; font-size:1rem; color:var(--dark-mauve); }
+  .exp-company { font-weight:600; color:var(--deep-pink); font-size:.9rem; }
+  .exp-date {
+    background:var(--light-pink); color:var(--mauve);
+    border:1px solid var(--pink); border-radius:20px;
+    padding:3px 12px; font-size:.78rem; font-weight:600;
+    white-space:nowrap;
+  }
+  .exp-desc { font-size:.88rem; color:var(--mauve); line-height:1.7; margin-top:8px; }
+
+  /* ── PROJECTS ── */
+  #projects { background:var(--cream); position:relative; overflow:hidden; }
+  .projects-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:20px; max-width:900px; margin:0 auto;
+  }
+  .proj-card {
+    background:var(--white); border-radius:20px;
+    padding:28px 24px;
     border:2px solid var(--pink);
     box-shadow:0 4px 16px rgba(196,122,138,.1);
     transition:transform .25s, box-shadow .25s;
-    cursor:default;
   }
-  .int-card:hover {
-    transform:translateY(-6px);
-    box-shadow:0 10px 28px rgba(196,122,138,.22);
+  .proj-card:hover { transform:translateY(-6px); box-shadow:0 10px 28px rgba(196,122,138,.22); }
+  .proj-icon { font-size:2rem; margin-bottom:12px; }
+  .proj-card h3 { font-size:1rem; font-weight:700; color:var(--dark-mauve); margin-bottom:8px; }
+  .proj-card p { font-size:.85rem; color:var(--mauve); line-height:1.6; margin-bottom:14px; }
+  .proj-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+  .proj-tag {
+    background:var(--light-pink); color:var(--dark-mauve);
+    border:1px solid var(--pink); border-radius:12px;
+    padding:2px 10px; font-size:.72rem; font-weight:600;
   }
-  .int-card .icon { font-size:2.2rem; margin-bottom:10px; }
-  .int-card h3 { font-size:.95rem; font-weight:700; color:var(--dark-mauve); margin-bottom:6px; }
-  .int-card p { font-size:.8rem; color:var(--mauve); }
-
-  /* ── GALLERY ── */
-  #gallery { background:var(--cream); }
-  .gallery-grid {
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    gap:16px; max-width:860px; margin:0 auto;
+  .proj-links { display:flex; gap:10px; }
+  .proj-link {
+    text-decoration:none; font-size:.8rem; font-weight:700;
+    color:var(--deep-pink); border:1.5px solid var(--pink);
+    border-radius:20px; padding:4px 14px;
+    transition:all .2s;
   }
-  .gallery-item {
-    border-radius:16px; overflow:hidden;
-    border:3px solid var(--pink);
-    aspect-ratio:1;
-    display:flex; align-items:center; justify-content:center;
-    font-size:3rem;
-    background: linear-gradient(135deg, var(--light-pink), var(--cream));
-    transition:transform .25s;
-    cursor:pointer;
-    position:relative;
-  }
-  .gallery-item:hover { transform:scale(1.04) rotate(1deg); }
-  .gallery-item span { font-size:.7rem; position:absolute; bottom:8px; color:var(--mauve); font-weight:600; }
-
-  /* ── SKILLS ── */
-  #skills { background:var(--light-pink); }
-  .skills-wrap { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
-  .skill-row label { display:flex; justify-content:space-between; margin-bottom:6px; font-weight:600; font-size:.88rem; color:var(--dark-mauve); }
-  .skill-bar {
-    height:14px; background:var(--white);
-    border-radius:10px; border:1.5px solid var(--pink);
-    overflow:hidden;
-  }
-  .skill-fill {
-    height:100%; border-radius:10px;
-    background: linear-gradient(90deg, var(--pink), var(--deep-pink));
-    animation: fillUp 1.4s ease-out forwards;
-    transform-origin: left;
-  }
-  @keyframes fillUp { from{width:0} }
+  .proj-link:hover { background:var(--deep-pink); color:#fff; border-color:var(--deep-pink); }
 
   /* ── CONTACT ── */
-  #contact { background:var(--cream); }
-  .contact-box {
-    max-width:500px; margin:0 auto; text-align:center;
+  #contact {
+    background:
+      radial-gradient(circle, rgba(255,255,255,0.45) 4px, transparent 4px),
+      radial-gradient(circle, rgba(255,255,255,0.45) 4px, transparent 4px),
+      var(--light-pink);
+    background-size: 28px 28px;
+    background-position: 0 0, 14px 14px;
   }
+  .contact-box { max-width:500px; margin:0 auto; text-align:center; }
   .contact-box p { margin-bottom:28px; font-size:.95rem; color:var(--mauve); }
   .contact-links { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
   .contact-btn {
@@ -242,207 +238,205 @@
     font-weight:700; font-size:.88rem;
     transition:all .25s; display:flex; align-items:center; gap:8px;
   }
-  .contact-btn:hover {
-    background:var(--deep-pink); color:#fff; border-color:var(--deep-pink);
-    transform:translateY(-3px);
-  }
+  .contact-btn:hover { background:var(--deep-pink); color:#fff; border-color:var(--deep-pink); transform:translateY(-3px); }
 
-  /* ── FOOTER ── */
-  footer {
-    background:var(--white);
-    border-top:2px dashed var(--pink);
-    padding:22px 40px; text-align:center;
-    font-size:.82rem; color:var(--mauve);
+  .lace-divider {
+    width:100%; height:60px;
+    background: url("lacetrim.png") repeat-x center/auto 100%;
+    position: relative; z-index: 5;
+    margin: -30px 0;
   }
-  footer strong { color:var(--deep-pink); }
-
-  /* ── STRAWBERRY DIVIDER ── */
-  .straw-divider {
-    text-align:center; font-size:1.2rem;
-    letter-spacing:6px; padding:10px 0;
-    color:var(--pink);
-    background:var(--white);
-  }
-
-  /* scrollbar */
-  ::-webkit-scrollbar { width:8px; }
-  ::-webkit-scrollbar-track { background:var(--light-pink); }
-  ::-webkit-scrollbar-thumb { background:var(--pink); border-radius:10px; }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">✿ <span>sweetspace</span></div>
+  <div class="nav-logo">✿ <span>emily's corner</span></div>
   <ul>
-    <li><a href="#about">About</a></li>
-    <li><a href="#interests">Interests</a></li>
-    <li><a href="#gallery">Vibes</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#contact">contact</a></li>
   </ul>
 </nav>
+<div class="lace-divider"></div>
 
 <!-- HERO -->
-<div class="lace-bottom" style="background:var(--white); transform:scaleY(-1);"></div>
 <section class="hero">
-  <div class="floating-deco d1">🍓</div>
-  <div class="floating-deco d2">🎀</div>
-  <div class="floating-deco d3">🌸</div>
-  <div class="floating-deco d4">🍓</div>
-
-  <div class="avatar-wrap">
-    <div class="bow">
-      <svg viewBox="0 0 60 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="15" cy="17" rx="14" ry="9" fill="#f2afc0" stroke="#c47a8a" stroke-width="2"/>
-        <ellipse cx="45" cy="17" rx="14" ry="9" fill="#f2afc0" stroke="#c47a8a" stroke-width="2"/>
-        <ellipse cx="30" cy="17" rx="6" ry="6" fill="#e07a98" stroke="#c47a8a" stroke-width="1.5"/>
-      </svg>
+  <div class="rain-container" id="heroRain"></div>
+  <div class="hero-content">
+    <div class="avatar-wrap">
+      <div class="bow">
+        <img src="pinkbow.png" alt="bow"/>
+      </div>
+      <img src="pinkrila.jpg" class="avatar" alt="my photo"/>
     </div>
-    <div class="avatar">🌸</div>
-  </div>
 
-  <h1>Hi, I'm [Your Name]!</h1>
-  <p class="hero-sub">✨ designer · dreamer · strawberry enthusiast ✨</p>
-  <div class="hero-badges">
-    <span class="badge">🎀 Creative</span>
-    <span class="badge">🍓 Sweet vibes</span>
-    <span class="badge">🌸 Aesthetic lover</span>
-    <span class="badge">💌 Open to collabs</span>
+    <h1>emily nguyen</h1>
+    <p class="hero-sub">✨ software developer · ux designer · foodie ✨</p>
+    <div class="hero-badges">
+      <span class="badge">🎀 she/her</span>
+      <span class="badge">🍓 boston university</span>
+      <span class="badge">🌸 cs undergrad</span>
+    </div>
   </div>
 </section>
-<div class="lace-bottom"></div>
 
-<div class="straw-divider">🍓 ✿ 🎀 ✿ 🍓 ✿ 🎀 ✿ 🍓</div>
+<div class="lace-divider"></div>
 
 <!-- ABOUT -->
-<section id="about">
-  <h2 class="section-title">🎀 About Me</h2>
-  <div class="about-card">
-    <p>Hello lovely! Welcome to my little corner of the internet 🌸 I'm a <strong>[your role]</strong> based in <strong>[your city]</strong>, passionate about creating things that are beautiful, thoughtful, and a little bit magical.</p>
-    <p>When I'm not working, you can find me hunting for the cutest stationery, rewatching Studio Ghibli films, journaling with too many gel pens, or obsessing over strawberry-flavored anything. 🍓</p>
-    <p>I believe in soft mornings, good playlists, and making the world a little more adorable. If that resonates with you — let's be friends! 💌</p>
-  </div>
-</section>
-
-<div class="straw-divider">✿ 🍓 ✿ 🍓 ✿ 🍓 ✿</div>
-
-<!-- INTERESTS -->
-<section id="interests">
-  <h2 class="section-title">🌸 My Interests</h2>
-  <div class="cards-grid">
-    <div class="int-card">
-      <div class="icon">🎨</div>
-      <h3>Design & Art</h3>
-      <p>Digital illustration, color palettes & cute typography</p>
-    </div>
-    <div class="int-card">
-      <div class="icon">🍓</div>
-      <h3>Baking</h3>
-      <p>Strawberry shortcakes, macarons & anything pastel</p>
-    </div>
-    <div class="int-card">
-      <div class="icon">📚</div>
-      <h3>Reading</h3>
-      <p>Fantasy, slice-of-life manga & cozy mysteries</p>
-    </div>
-    <div class="int-card">
-      <div class="icon">🎀</div>
-      <h3>Collecting</h3>
-      <p>Plushies, stickers, washi tape & stationery</p>
-    </div>
-    <div class="int-card">
-      <div class="icon">🌸</div>
-      <h3>Photography</h3>
-      <p>Film cameras, golden hour & flatlay aesthetics</p>
-    </div>
-    <div class="int-card">
-      <div class="icon">🎵</div>
-      <h3>Music</h3>
-      <p>J-pop, bedroom pop & dreamy indie playlists</p>
+<section id="about" style="background:var(--cream);">
+  <div class="paw-bg"></div>
+  <h2 class="section-title">🎀 about me</h2>
+  <div style="max-width:700px;margin:0 auto;position:relative;">
+    <img src="rilamagnify.png" alt="rila character" style="position:absolute;right:100%;top:50%;transform:translateY(-50%);margin-right:16px;width:210px;height:210px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(196,122,138,.2));"/>
+    <div style="background:var(--white);border-radius:24px;padding:36px 40px;border:2px solid var(--pink);box-shadow:0 6px 24px rgba(196,122,138,.12);line-height:1.8;font-size:.98rem;position:relative;overflow:hidden;">
+      <div style="position:absolute;bottom:-10px;right:-10px;font-size:5rem;opacity:.1;">🍓</div>
+      <p style="margin-bottom:12px;">hello! i'm a <strong>software developer</strong> based in <strong>boston</strong>, with a passion for front-end development. this summer, i will be a <strong>front-end engineering intern</strong> at <strong>cargurus</strong>!</p>
+      <p style="margin-bottom:12px;">in the past, I have done two internships at <strong>blue cross blue shield</strong> as a <strong>software engineer intern</strong> and <strong>data analytics intern</strong>.</p>
+      <p>when i'm not working, you can find me posting on my food account and exploring new restaurants. </p>
     </div>
   </div>
 </section>
 
-<div class="lace-top"></div>
+<div class="lace-divider"></div>
 
-<!-- GALLERY / VIBES -->
-<section id="gallery">
-  <h2 class="section-title">🍓 My Vibe Board</h2>
-  <div class="gallery-grid">
-    <div class="gallery-item">🌸<span>spring walks</span></div>
-    <div class="gallery-item">🍓<span>strawberry fields</span></div>
-    <div class="gallery-item">🎀<span>pink bows</span></div>
-    <div class="gallery-item">🕯️<span>cozy evenings</span></div>
-    <div class="gallery-item">📖<span>café reads</span></div>
-    <div class="gallery-item">🧁<span>cute treats</span></div>
-    <div class="gallery-item">🌷<span>flower markets</span></div>
-    <div class="gallery-item">💌<span>handwritten notes</span></div>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <h2 class="section-title">🎀 experience</h2>
+  <div class="exp-list" style="position:relative;">
+    <img src="rilasmart.png" alt="rila character" style="position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:16px;width:280px;height:280px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(196,122,138,.2));"/>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Software Engineer Intern</div>
+          <div class="exp-company">CarGurus</div>
+        </div>
+        <span class="exp-date">Summer 2026</span>
+      </div>
+      <p class="exp-desc">Incoming front-end engineer intern 🌸</p>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Software Engineer Intern</div>
+          <div class="exp-company">Blue Cross Blue Shield</div>
+        </div>
+        <span class="exp-date">Summer 2024</span>
+      </div>
+      <p class="exp-desc">Built a scheduling algorithm in Python to match clinicians to patients for Hospital-at-Home programs, and developed a React + Flask + PostgreSQL web app for providers to manage proposed schedules.</p>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Data Analytics Intern</div>
+          <div class="exp-company">Blue Cross Blue Shield</div>
+        </div>
+        <span class="exp-date">Summer 2023</span>
+      </div>
+      <p class="exp-desc">Profiled and delivered clean data extracts using SQL and Snowflake for vendor integration, automated CSV normalization with Python, and built Power BI dashboard datasets to surface fraud, waste, and abuse trends.</p>
+    </div>
+
   </div>
 </section>
 
-<div class="lace-bottom"></div>
+<div class="lace-divider"></div>
 
-<!-- SKILLS -->
-<section id="skills">
-  <h2 class="section-title">✿ My Skills</h2>
-  <div class="skills-wrap">
-    <div class="skill-row">
-      <label><span>🎨 Design</span><span>90%</span></label>
-      <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="paw-bg"></div>
+  <h2 class="section-title">🎀 projects</h2>
+  <div class="projects-grid">
+
+    <div class="proj-card">
+      <h3>Semantic Notes Search</h3>
+      <p>A document search engine that indexes PDFs and Markdown files, ranking results using TF-IDF and cosine similarity for fast, relevant queries.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">React</span>
+        <span class="proj-tag">FastAPI</span>
+        <span class="proj-tag">PostgreSQL</span>
+        <span class="proj-tag">scikit-learn</span>
+      </div>
+      <div class="proj-links">
+        <a class="proj-link" href="#">GitHub</a>
+      </div>
     </div>
-    <div class="skill-row">
-      <label><span>💻 Coding</span><span>75%</span></label>
-      <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+
+    <div class="proj-card">
+      <h3>Matcha Finder</h3>
+      <p>A full-stack web app for discovering local matcha cafés by distance, rating, and popularity — with Google Maps integration, favorites, and shareable café lists.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">Next.js</span>
+        <span class="proj-tag">Node</span>
+        <span class="proj-tag">PostgreSQL</span>
+        <span class="proj-tag">Google Maps API</span>
+      </div>
+      <div class="proj-links">
+        <a class="proj-link" href="#">GitHub</a>
+      </div>
     </div>
-    <div class="skill-row">
-      <label><span>📸 Photography</span><span>80%</span></label>
-      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+
+    <div class="proj-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:220px;background:linear-gradient(135deg,var(--light-pink),var(--cream));border-style:dashed;">
+      <h3 style="color:var(--deep-pink);margin-bottom:8px;">coming soon</h3>
+      <p style="font-style:italic;color:var(--mauve);font-size:.82rem;">something cute is in the works...</p>
     </div>
-    <div class="skill-row">
-      <label><span>✍️ Writing</span><span>85%</span></label>
-      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
-    </div>
-    <div class="skill-row">
-      <label><span>🍓 Strawberry finding</span><span>100%</span></label>
-      <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
-    </div>
+
   </div>
 </section>
 
-<div class="lace-top"></div>
+<div class="lace-divider"></div>
 
 <!-- CONTACT -->
-<section id="contact">
-  <h2 class="section-title">💌 Say Hello!</h2>
+<section id="contact" style="position:relative;">
+  <img src="rilastand.png" alt="rila character" style="position:absolute;left:calc(50% + 270px);top:50%;transform:translateY(-50%);width:220px;height:220px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(196,122,138,.2));pointer-events:none;z-index:1;"/>
+  <h2 class="section-title">💌 contact me!</h2>
   <div class="contact-box">
-    <p>I'd love to hear from you! Whether it's a collab, a project, or just sharing cute finds — my inbox is always open 🌸</p>
-    <div class="contact-links">
-      <a class="contact-btn" href="mailto:you@email.com">📧 Email Me</a>
-      <a class="contact-btn" href="#">🐦 Twitter</a>
-      <a class="contact-btn" href="#">📸 Instagram</a>
-      <a class="contact-btn" href="#">💼 LinkedIn</a>
+    <div class="contact-links" style="flex-wrap:nowrap;">
+      <a class="contact-btn" href="mailto:you@email.com"><span style="color:var(--deep-pink);">♥</span> email</a>
+      <a class="contact-btn" href="#"><span style="color:var(--deep-pink);">♥</span> instagram</a>
+      <a class="contact-btn" href="#"><span style="color:var(--deep-pink);">♥</span> linkedin</a>
+      <a class="contact-btn" href="#"><span style="color:var(--deep-pink);">♥</span> github</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<div class="straw-divider">🍓 ✿ 🎀 ✿ 🍓 ✿ 🎀 ✿ 🍓</div>
-<footer>
-  Made with <strong>🍓 & 💕</strong> by <strong>[Your Name]</strong> · <span id="yr"></span>
-</footer>
+<div class="lace-divider"></div>
 
 <script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
-
-  // smooth scroll
+  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const t = document.querySelector(a.getAttribute('href'));
-      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'center'}); }
     });
   });
+
+  // Hero emoji rain — uniform spread; center fades before text; already mid-flow on mount
+  (function() {
+    const emojis = ['🍓', '🎀', '🌸'];
+    const container = document.getElementById('heroRain');
+    const fallDist = document.querySelector('.hero').offsetHeight + 80;
+    for (let i = 0; i < 42; i++) {
+      const drop = document.createElement('span');
+      drop.className = 'raindrop';
+      drop.textContent = emojis[i % emojis.length];
+      const leftPct = Math.random() * 100;
+      drop.style.left = leftPct + '%';
+      const isCenter = leftPct > 27 && leftPct < 73;
+      drop.style.animation = (isCenter ? 'rainFallCenter' : 'rainFall') + ' linear infinite';
+      drop.style.fontSize = (.75 + Math.random() * .75) + 'rem';
+      const dur = 8 + Math.random() * 10;
+      drop.style.animationDuration = dur + 's';
+      // Negative delay = drop is already mid-fall when page loads
+      drop.style.animationDelay = -(Math.random() * dur) + 's';
+      drop.style.setProperty('--fall-dist', fallDist + 'px');
+      container.appendChild(drop);
+    }
+  })();
 </script>
 </body>
 </html>

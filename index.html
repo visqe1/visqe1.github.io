@@ -181,7 +181,12 @@
   .exp-card:hover::after {
     width: 8px;
   }
-  .exp-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+  .exp-card { cursor:pointer; }
+  .exp-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:0; }
+  .exp-chevron { font-size:.75rem; color:var(--mauve); transition:transform .3s ease; margin-left:8px; flex-shrink:0; align-self:center; }
+  .exp-card.open .exp-chevron { transform:rotate(180deg); }
+  .exp-desc { font-size:.88rem; color:var(--mauve); line-height:1.7; overflow:hidden; max-height:0; transition:max-height .35s ease, margin-top .35s ease; margin-top:0; }
+  .exp-card.open .exp-desc { max-height:200px; margin-top:10px; }
   .exp-role { font-weight:700; font-size:1rem; color:var(--dark-mauve); }
   .exp-company { font-weight:600; color:var(--deep-pink); font-size:.9rem; }
   .exp-date {
@@ -492,12 +497,15 @@
     <div class="exp-card">
       <div class="exp-header">
         <div>
-          <div class="exp-role">Software Engineer Intern</div>
+          <div class="exp-role">Incoming Software Engineer Intern</div>
           <div class="exp-company">CarGurus</div>
         </div>
-        <span class="exp-date">Summer 2026</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="exp-date">Summer 2026</span>
+          <span class="exp-chevron">▼</span>
+        </div>
       </div>
-      <p class="exp-desc">Incoming front-end engineer intern. </p>
+      <p class="exp-desc">Front-end engineer intern.</p>
     </div>
 
     <div class="exp-card">
@@ -506,7 +514,10 @@
           <div class="exp-role">Software Engineer Intern</div>
           <div class="exp-company">Blue Cross Blue Shield</div>
         </div>
-        <span class="exp-date">Summer 2024</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="exp-date">Summer 2024</span>
+          <span class="exp-chevron">▼</span>
+        </div>
       </div>
       <p class="exp-desc">Built a scheduling algorithm in Python to match clinicians to patients for Hospital-at-Home programs, and developed a React + Flask + PostgreSQL web app for providers to manage proposed schedules.</p>
     </div>
@@ -517,7 +528,10 @@
           <div class="exp-role">Data Analytics Intern</div>
           <div class="exp-company">Blue Cross Blue Shield</div>
         </div>
-        <span class="exp-date">Summer 2023</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="exp-date">Summer 2023</span>
+          <span class="exp-chevron">▼</span>
+        </div>
       </div>
       <p class="exp-desc">Profiled and delivered clean data extracts using SQL and Snowflake for vendor integration, automated CSV normalization with Python, and built Power BI dashboard datasets to surface fraud, waste, and abuse trends.</p>
     </div>
@@ -871,6 +885,11 @@
       }
     });
   })();
+</script>
+<script>
+  document.querySelectorAll('.exp-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('open'));
+  });
 </script>
 </body>
 </html>

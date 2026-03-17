@@ -112,11 +112,13 @@
     font-size:3rem; color:var(--deep-pink); margin-bottom:8px;
   }
   .hero-sub { font-size:1rem; color:var(--mauve); margin-bottom:24px; font-weight:500; }
-  .hero-badges { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
+  .hero-badges { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:20px; }
   .badge {
     background:var(--light-pink); color:var(--dark-mauve);
     border:1.5px solid var(--pink); border-radius:20px;
     padding:5px 14px; font-size:.82rem; font-weight:600;
+    outline: 2px dotted var(--pink);
+    outline-offset: 4px;
   }
 
   /* ── SECTION BASE ── */
@@ -261,15 +263,17 @@
   }
   .contact-box { max-width:500px; margin:0 auto; text-align:center; }
   .contact-box p { margin-bottom:28px; font-size:.95rem; color:var(--mauve); }
-  .contact-links { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .contact-links { display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
   .contact-btn {
     background:var(--white); color:var(--dark-mauve);
     border:2px solid var(--pink); border-radius:30px;
     padding:10px 22px; text-decoration:none;
     font-weight:700; font-size:.88rem;
     transition:all .25s; display:flex; align-items:center; gap:8px;
+    outline: 2px dotted var(--pink);
+    outline-offset: 4px;
   }
-  .contact-btn:hover { background:var(--deep-pink); color:#fff; border-color:var(--deep-pink); transform:translateY(-3px); }
+  .contact-btn:hover { background:var(--deep-pink); color:#fff; border-color:var(--deep-pink); transform:translateY(-3px); outline-color: var(--deep-pink); }
 
   .lace-divider {
     width:100%; height:60px;
@@ -776,6 +780,7 @@
     loadTrack(0, false);
 
     // Muted autoplay — unmute on first interaction
+    audio.volume = 0.3;
     audio.muted = true;
     audio.play().then(() => {
       setIcon(true);
